@@ -67,6 +67,12 @@ py.test-%{pyver} --ignore build
 
 
 %changelog
+* Tue Aug 12 2014 Carl George <carl.george@rackspace.com> - 0.24.0-1.ius
+- Port from Fedora to IUS
+- Remove patches (merged upstream)
+- Disable test suite
+- Latest upstream
+
 * Sun Jun 08 2014 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 0.22.0-4
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_21_Mass_Rebuild
 
