@@ -49,8 +49,6 @@ This is package contains Python 3 version of the package.
 
 %prep
 %setup -q -n %{pypi_name}-%{version}
-# remove unneeded shebangs
-sed -ie '1d' %{pypi_name}/{egg2wheel,wininst2wheel}.py
 
 %if 0%{?with_python3}
 rm -rf %{py3dir}
@@ -99,18 +97,14 @@ popd
 
 %files
 %doc LICENSE.txt CHANGES.txt README.txt
-%{_bindir}/egg2wheel
 %{_bindir}/wheel
-%{_bindir}/wininst2wheel
 %{python_sitelib}/%{pypi_name}*
 %exclude %{python_sitelib}/%{pypi_name}/test
 %if 0%{?with_python3}
 
 %files -n python3-%{pypi_name}
 %doc LICENSE.txt CHANGES.txt README.txt
-%{_bindir}/python3-egg2wheel
 %{_bindir}/python3-wheel
-%{_bindir}/python3-wininst2wheel
 %{python3_sitelib}/%{pypi_name}*
 %exclude %{python3_sitelib}/%{pypi_name}/test
 %endif # with_python3
