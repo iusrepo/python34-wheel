@@ -8,7 +8,7 @@
 
 
 Name:           python%{iusver}-%{srcname}
-Version:        0.24.0
+Version:        0.25.0
 Release:        1.ius%{?dist}
 Summary:        A built-package format for Python %{pyver}
 %if 0%{?rhel} < 7
@@ -67,6 +67,9 @@ py.test-%{pyver} --ignore build
 
 
 %changelog
+* Thu Sep 17 2015 Ben Harper <ben.harper@rackspace.com> - 0.25.0-1.ius
+- Latest upstream
+
 * Tue Aug 12 2014 Carl George <carl.george@rackspace.com> - 0.24.0-1.ius
 - Port from Fedora to IUS
 - Remove patches (merged upstream)
