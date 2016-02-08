@@ -8,7 +8,7 @@
 
 
 Name:           python%{iusver}-%{srcname}
-Version:        0.26.0
+Version:        0.29.0
 Release:        1.ius%{?dist}
 Summary:        A built-package format for Python %{pyver}
 %if 0%{?rhel} < 7
@@ -67,6 +67,9 @@ py.test-%{pyver} --ignore build
 
 
 %changelog
+* Mon Feb 08 2016 Ben Harper <ben.harper@rackspace.com> - 0.27.0-1.ius
+- Latest upstream
+
 * Mon Oct 05 2015 Carl George <carl.george@rackspace.com> - 0.26.0-1.ius
 - Latest upstream
 
