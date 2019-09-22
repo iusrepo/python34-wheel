@@ -1,20 +1,18 @@
-%global pymajor 3
-%global pyminor 4
-%global pyver %{pymajor}.%{pyminor}
-%global iusver %{pymajor}%{pyminor}u
 %global srcname wheel
-%global src %(echo %{srcname} | cut -c1)
 
+%if %{undefined el6}
+%global __python3 /usr/bin/python3.4
+%endif
 
 Name:           python34-%{srcname}
 Version:        0.30.0
 Release:        2%{?dist}
-Summary:        A built-package format for Python %{pyver}
+Summary:        A built-package format for Python
 License:        MIT
 URL:            https://github.com/pypa/%{srcname}
-Source0:        https://pypi.io/packages/source/w/wheel/%{srcname}-%{version}.tar.gz
-#Source0:        https://pypi.python.org/packages/source/%{src}/%{srcname}/%{srcname}-%{version}.tar.gz
+Source0:        %pypi_source
 BuildArch:      noarch
+BuildRequires:  python3-rpm-macros
 BuildRequires:  python34-devel
 BuildRequires:  python34-setuptools
 
@@ -33,29 +31,36 @@ compatible install in a way that is very close to the on-disk format.
 
 %prep
 %setup -q -n %{srcname}-%{version}
+rm -rf %{srcname}.egg-info
 
 
 %build
-%{__python3} setup.py build
+%py3_build
 
 
 %install
-%{__python3} setup.py install --optimize 1 --skip-build --root %{buildroot}
-%{__mv} %{buildroot}%{_bindir}/%{srcname}{,%{pyver}}
-ln -sf %{_bindir}/%{srcname}%{pyver} %{buildroot}%{_bindir}/%{srcname}%{pymajor}
+%py3_install
+mv %{buildroot}%{_bindir}/%{srcname}{,-%{python3_version}}
+%if %{defined el6}
+ln -s %{srcname}-%{python3_version} %{buildroot}%{_bindir}/%{srcname}-3
+%endif
 
 
 %files
 %license LICENSE.txt
-%doc CHANGES.txt
-%{_bindir}/%{srcname}%{pymajor}
-%{_bindir}/%{srcname}%{pyver}
-%{python3_sitelib}/%{srcname}*
+%doc CHANGES.txt README.rst
+%{python3_sitelib}/%{srcname}
+%{python3_sitelib}/%{srcname}-%{version}-py%{python3_version}.egg-info
+%{_bindir}/%{srcname}-%{python3_version}
+%if %{defined el6}
+%{_bindir}/%{srcname}-3
+%endif
 
 
 %changelog
 * Sun Sep 22 2019 Carl George <carl@george.computer> - 0.30.0-2
 - Rename to python34-wheel
+- Switch to EPEL python3 macros
 
 * Mon Sep 18 2017 Ben Harper <ben.harper@rackspace.com> - 0.30.0-1.ius
 - Latest upstream
