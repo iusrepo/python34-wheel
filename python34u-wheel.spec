@@ -9,11 +9,8 @@
 
 Name:           python%{iusver}-%{srcname}
 Version:        0.30.0
-Release:        1.ius%{?dist}
+Release:        1%{?dist}
 Summary:        A built-package format for Python %{pyver}
-%if 0%{?rhel} < 7
-Group:          Development/Libraries
-%endif
 License:        MIT
 URL:            https://github.com/pypa/%{srcname}
 Source0:        https://pypi.io/packages/source/w/wheel/%{srcname}-%{version}.tar.gz
