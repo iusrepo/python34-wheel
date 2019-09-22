@@ -4,26 +4,23 @@
 %global iusver %{pymajor}%{pyminor}u
 %global srcname wheel
 %global src %(echo %{srcname} | cut -c1)
-%global with_tests 0
 
 
-Name:           python%{iusver}-%{srcname}
+Name:           python34-%{srcname}
 Version:        0.30.0
-Release:        1%{?dist}
+Release:        2%{?dist}
 Summary:        A built-package format for Python %{pyver}
 License:        MIT
 URL:            https://github.com/pypa/%{srcname}
 Source0:        https://pypi.io/packages/source/w/wheel/%{srcname}-%{version}.tar.gz
 #Source0:        https://pypi.python.org/packages/source/%{src}/%{srcname}/%{srcname}-%{version}.tar.gz
 BuildArch:      noarch
-BuildRequires:  python%{iusver}-devel
-BuildRequires:  python%{iusver}-setuptools
-%if 0%{?with_tests}
-# These don't exist in IUS yet, so don't enable the test suite until they do.
-BuildRequires:  pytest%{iusver}
-BuildRequires:  python%{iusver}-jsonschema
-BuildRequires:  python%{iusver}-keyring
-%endif
+BuildRequires:  python34-devel
+BuildRequires:  python34-setuptools
+
+# Rename from python34u-wheel
+Provides:       python34u-%{srcname} = %{version}-%{release}
+Obsoletes:      python34u-%{srcname} < 0.30.0-2
 
 
 %description
@@ -48,14 +45,6 @@ compatible install in a way that is very close to the on-disk format.
 ln -sf %{_bindir}/%{srcname}%{pyver} %{buildroot}%{_bindir}/%{srcname}%{pymajor}
 
 
-%if 0%{?with_tests}
-%check
-# remove setup.cfg that makes pytest require pytest-cov (unnecessary dep)
-rm setup.cfg
-py.test-%{pyver} --ignore build
-%endif
-
-
 %files
 %license LICENSE.txt
 %doc CHANGES.txt
@@ -65,6 +54,9 @@ py.test-%{pyver} --ignore build
 
 
 %changelog
+* Sun Sep 22 2019 Carl George <carl@george.computer> - 0.30.0-2
+- Rename to python34-wheel
+
 * Mon Sep 18 2017 Ben Harper <ben.harper@rackspace.com> - 0.30.0-1.ius
 - Latest upstream
 - update URL
